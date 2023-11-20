@@ -1,0 +1,25 @@
+disabled_rules:
+- trailing_whitespace
+- nesting
+- function_body_length
+- large_tuple
+- identifier_name
+- unused_closure_parameter
+- force_try
+- type_body_length
+- function_parameter_count
+- force_cast
+- type_name
+- redundant_optional_initialization
+- line_length
+
+excluded:
+- Pods/
+- Podfile
+- Podfile.lock
+
+line_length: 190
+file_length: 500
+type_body_length:
+- 250
+- 300
