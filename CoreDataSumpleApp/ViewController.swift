@@ -2,12 +2,13 @@
 //  ViewController.swift
 //  CoreDataSumpleApp
 //
-//  Created by impl on 2023/11/21.
+//  Created by KOTOMI TAKAHASHI on 2023/11/21.
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController {
+class TasksViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
