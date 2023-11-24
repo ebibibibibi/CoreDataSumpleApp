@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--タスク一覧-->
+        <!--TODOリスト-->
         <scene sceneID="Vr1-wS-gj9">
             <objects>
                 <tableViewController id="4xq-67-mrc" customClass="TasksViewController" customModule="CoreDataSumpleApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -30,7 +30,20 @@
                             <outlet property="delegate" destination="4xq-67-mrc" id="LTb-Km-aZV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="タスク一覧" id="N9W-sR-OVY"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="TODOリスト" id="Wx8-wv-6a0">
+                        <barButtonItem key="leftBarButtonItem" title="Delete all" id="UwG-7a-jf9">
+                            <connections>
+                                <action selector="promptForDeletingAllTasks:" destination="4xq-67-mrc" id="pXX-aK-Mrw"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="gsb-4W-Sz5">
+                            <connections>
+                                <action selector="saveTask:" destination="4xq-67-mrc" id="FvV-Cm-fpU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0G-Zg-9iX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -56,6 +69,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
