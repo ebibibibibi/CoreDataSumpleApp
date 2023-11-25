@@ -193,4 +193,29 @@ extension TasksViewController {
             print(error.localizedDescription)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let done = trailingSwipeDoneAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [done])
+    }
+    private func trailingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
+            deleteTask(at: indexPath)
+            completion(true)
+        }
+        action.image = UIImage(systemName: "trash")
+        
+        return action
+    }
+    // タスクの削除を行う
+    private func deleteTask(at indexPath: IndexPath) {
+        let context = getContext()
+        do {
+            tasks.remove(at: indexPath.row)
+            try context.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        self.tableView.reloadData()
+    }
 }
