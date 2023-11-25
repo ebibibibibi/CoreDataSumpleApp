@@ -65,8 +65,8 @@ class TasksViewController: UITableViewController {
         let cancelAction = UIAlertAction(title: "キャンセル", style: .default) { _ in
         }
         
-        alertController.addAction(saveActrion)
         alertController.addAction(cancelAction)
+        alertController.addAction(saveActrion)
         
         present(alertController, animated: true, completion: nil)
     }
@@ -95,7 +95,7 @@ class TasksViewController: UITableViewController {
         let alertController = UIAlertController(title: "削除", message: "全てのタスクを削除しますか?", preferredStyle: .alert)
         
         let yes = UIAlertAction(title: "はい", style: .default) { action in
-            self.deleteTasks()
+            self.deleteAllTasks()
             self.tableView.reloadData()
         }
         
@@ -107,8 +107,9 @@ class TasksViewController: UITableViewController {
         
         present(alertController, animated: true, completion: nil)
     }
+    
     // CoreDataのタスクを全て削除する。
-    private func deleteTasks() {
+    private func deleteAllTasks() {
         let context = getContext()
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         if let objects = try? context.fetch(fetchRequest) {
@@ -124,8 +125,6 @@ class TasksViewController: UITableViewController {
             print(error.localizedDescription)
         }
     }
-    
-    
 }
 
 // tableViewの描画
