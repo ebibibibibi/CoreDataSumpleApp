@@ -130,6 +130,10 @@ class TasksViewController: UITableViewController {
 // tableViewの描画
 extension TasksViewController {
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     // テーブルビューに表示するタスクの数を返す
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
@@ -147,5 +151,46 @@ extension TasksViewController {
             cell.backgroundColor = .red
         }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let done = leadingSwipeDoneAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [done])
+    }
+    
+    private func leadingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
+            changeDone(at: indexPath)
+            completion(true)
+        }
+        
+        let row = tasks[indexPath.row]
+        action.image = UIImage(systemName: "checkmark.square")
+        if row.isFinish {
+            action.image = UIImage(systemName: "checkmark.square.fill")
+            action.backgroundColor = .systemRed
+
+        } else {
+            action.backgroundColor = .systemGray
+        }
+        
+        return action
+    }
+    // タスクのステータスを更新する
+    private func changeDone(at indexPath: IndexPath) {
+        let context = getContext()
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let title = tasks[indexPath.row].title
+        fetchRequest.predicate = NSPredicate(format: "title == %@", title!)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            tasks[indexPath.row] = results.first!
+            tasks[indexPath.row].isFinish = !tasks[indexPath.row].isFinish
+
+            try context.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
 }
