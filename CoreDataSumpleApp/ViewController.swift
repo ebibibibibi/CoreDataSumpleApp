@@ -46,6 +46,51 @@ class TasksViewController: UITableViewController {
         
     }
     
+    // タスクを追加する。
+    @IBAction func addNewTaskButtonTapped(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "新しいタスク", message: "新しいタスクを追加してください", preferredStyle: .alert)
+        
+        let saveActrion = UIAlertAction(title: "保存", style: .default) { action in
+            let textField = alertController.textFields?.first
+            
+            if let newTask = textField?.text {
+                self.saveTask(withTitle: newTask)
+                self.tableView.reloadData()
+            }
+        }
+        
+        alertController.addTextField { _ in
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .default) { _ in
+        }
+        
+        alertController.addAction(saveActrion)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    // 新しいタスクをCore Dataに保存する
+    private func saveTask(withTitle title: String) {
+        let context = getContext()
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: "Task", in: context) else { return }
+        
+        let taskObject = Task(entity: entity, insertInto: context)
+        taskObject.title = title
+        taskObject.isFinish = false
+        
+        do {
+            try context.save()
+            tasks.append(taskObject)
+            
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
     // テーブルビューに表示するタスクの数を返す
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
