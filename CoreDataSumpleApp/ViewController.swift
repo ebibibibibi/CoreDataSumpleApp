@@ -88,8 +88,48 @@ class TasksViewController: UITableViewController {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-        
     }
+    
+    // 全てのタスクを削除する。
+    @IBAction func deleteAllTaskButtonTapped(_ sender: Any) {
+        let alertController = UIAlertController(title: "削除", message: "全てのタスクを削除しますか?", preferredStyle: .alert)
+        
+        let yes = UIAlertAction(title: "はい", style: .default) { action in
+            self.deleteTasks()
+            self.tableView.reloadData()
+        }
+        
+        let no = UIAlertAction(title: "いいえ", style: .default) { _ in
+        }
+        
+        alertController.addAction(yes)
+        alertController.addAction(no)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    // CoreDataのタスクを全て削除する。
+    private func deleteTasks() {
+        let context = getContext()
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        if let objects = try? context.fetch(fetchRequest) {
+            for object in objects {
+                context.delete(object)
+                tasks.removeAll()
+            }
+        }
+        
+        do {
+            try context.save()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+}
+
+// tableViewの描画
+extension TasksViewController {
     
     // テーブルビューに表示するタスクの数を返す
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
