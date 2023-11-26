@@ -12,6 +12,7 @@ import XCTest
 
 final class TasksViewControllerTests: XCTestCase {
     var viewController: TasksViewController!
+    var mockPersistantContainer: NSPersistentContainer!
     
     override func setUp() {
         super.setUp()
@@ -39,8 +40,21 @@ final class TasksViewControllerTests: XCTestCase {
     }
     
     // viewWillAppearメソッド内で、Core Dataからデータをフェッチする処理が正しく行われることを確認
-    private func testFatchData() {
+    private func testFatchData() throws {
+        // getContext()メソッドを呼び出し
+        let context = viewController.getContext()
+        let task = Task(context: context)
+        task.title = "Test Task"
+        task.isFinish = false
+        try context.save()
         
+        // viewWillAppearメソッドのTrigger
+        viewController.beginAppearanceTransition(true, animated: false)
+        viewController.endAppearanceTransition()
+        
+        XCTAssertEqual(viewController.tasks.count, 1, "フェッチされるタスクは1つであるべきだ")
+        
+        XCTAssertEqual(viewController.tasks.first?.title, "Test Task", "フェッチされたタスクは正しいタイトルを持つべきである")
     }
     
     // saveTask(withTitle:)メソッドが新しいタスクを正しくCore Dataに保存していることを確認する
