@@ -48,10 +48,6 @@ final class TasksViewControllerTests: XCTestCase {
         task.isFinish = false
         try context.save()
         
-        // viewWillAppearメソッドのTrigger
-        viewController.beginAppearanceTransition(true, animated: false)
-        viewController.endAppearanceTransition()
-        
         XCTAssertEqual(viewController.tasks.count, 1, "フェッチされるタスクは1つであるべきだ")
         
         XCTAssertEqual(viewController.tasks.first?.title, "Test Task", "フェッチされたタスクは正しいタイトルを持つべきである")
