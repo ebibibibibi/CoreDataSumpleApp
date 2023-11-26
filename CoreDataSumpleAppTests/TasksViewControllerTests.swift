@@ -37,4 +37,39 @@ final class TasksViewControllerTests: XCTestCase {
         XCTAssertNotNil(context, "Contextは必ず存在する")
         XCTAssertTrue(context is NSManagedObjectContext, "contextはNSManagedObjectContext型のインスタンスです。")
     }
+    
+    // viewWillAppearメソッド内で、Core Dataからデータをフェッチする処理が正しく行われることを確認
+    private func testFatchData() {
+        
+    }
+    
+    // saveTask(withTitle:)メソッドが新しいタスクを正しくCore Dataに保存していることを確認する
+    private func testSaveTask() {
+        
+    }
+    
+    // deleteAllTasks()メソッドがCore Dataの全タスクを適切に削除することを確認
+    private func testDeleteAllTasks() {
+        
+    }
+    
+    // deleteTask(at:)メソッドが特定のタスクを正しく削除することを確認
+    private func testDeleteTask() {
+        
+    }
+    
+    // changeDone(at:)メソッドがタスクの完了状態を正しく切り替えることを確認
+    private func testChangeDone() {
+        
+    }
+    
+    // tableView(_:cellForRowAt:)メソッドがタスクのデータに基づいて正しいセルを表示していることを確認
+    private func testTableView() {
+        
+    }
+    
+    // leadingSwipeDoneAction(at:)とtrailingSwipeDoneAction(at:)メソッドが正しいアクションを提供していることを確認
+    private func testLeadingSwipeDoneAction() {
+        
+    }
 }

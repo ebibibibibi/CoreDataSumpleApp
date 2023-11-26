@@ -12,9 +12,7 @@
 		3034E9932B12EA7F007E9D19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
 		3034E9942B12EA7F007E9D19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
 		3034E9952B12EA82007E9D19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
-		3034E9962B12EA82007E9D19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
 		3034E9972B12EAB2007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0F2B0BC4F3002FB6A9 /* CoreDataSumpleApp.xcdatamodeld */; };
-		3034E9982B12EAB3007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0F2B0BC4F3002FB6A9 /* CoreDataSumpleApp.xcdatamodeld */; };
 		30FF6E072B0BC4F3002FB6A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
 		30FF6E092B0BC4F3002FB6A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
 		30FF6E0B2B0BC4F3002FB6A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0A2B0BC4F3002FB6A9 /* ViewController.swift */; };
@@ -301,9 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3034E9962B12EA82007E9D19 /* AppDelegate.swift in Sources */,
 				30FF6E2C2B0BC4F4002FB6A9 /* CoreDataSumpleAppUITests.swift in Sources */,
-				3034E9982B12EAB3007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */,
 				30FF6E2E2B0BC4F4002FB6A9 /* CoreDataSumpleAppUITestsLaunchTests.swift in Sources */,
 				3034E9942B12EA7F007E9D19 /* SceneDelegate.swift in Sources */,
 			);
