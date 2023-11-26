@@ -72,7 +72,7 @@ class TasksViewController: UITableViewController {
     }
     
     // 新しいタスクをCore Dataに保存する
-    private func saveTask(withTitle title: String) {
+    internal func saveTask(withTitle title: String) {
         let context = getContext()
         
         guard let entity = NSEntityDescription.entity(forEntityName: "Task", in: context) else { return }

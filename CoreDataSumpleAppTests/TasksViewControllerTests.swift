@@ -55,7 +55,12 @@ final class TasksViewControllerTests: XCTestCase {
     
     // saveTask(withTitle:)メソッドが新しいタスクを正しくCore Dataに保存していることを確認する
     private func testSaveTask() {
-        
+        // getContext()メソッドを呼び出し
+        let context = viewController.getContext()
+        let task = Task(context: context)
+        viewController.saveTask(withTitle: "新しいタスク")
+        XCTAssertEqual(viewController.tasks.count, 1, "フェッチされるタスクは1つであるべきだ")
+        XCTAssertEqual(viewController.tasks.first?.title, "新しいタスク", "フェッチされたタスクは正しいタイトルを持つべきである")
     }
     
     // deleteAllTasks()メソッドがCore Dataの全タスクを適切に削除することを確認
