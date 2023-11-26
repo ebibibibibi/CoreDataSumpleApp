@@ -13,7 +13,7 @@ class TasksViewController: UITableViewController {
     
     // NSManagedObjectContextを取得。
     // データベースに対するクエリや保存といった操作を行うための前準備
-    private func getContext() ->  NSManagedObjectContext {
+    internal func getContext() ->  NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }

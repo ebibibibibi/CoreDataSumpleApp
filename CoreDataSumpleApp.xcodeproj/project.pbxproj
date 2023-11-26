@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3034E98F2B12503E007E9D19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0A2B0BC4F3002FB6A9 /* ViewController.swift */; };
+		3034E9922B125079007E9D19 /* TasksViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3034E9912B125079007E9D19 /* TasksViewControllerTests.swift */; };
+		3034E9932B12EA7F007E9D19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
+		3034E9942B12EA7F007E9D19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
+		3034E9952B12EA82007E9D19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
+		3034E9962B12EA82007E9D19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
+		3034E9972B12EAB2007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0F2B0BC4F3002FB6A9 /* CoreDataSumpleApp.xcdatamodeld */; };
+		3034E9982B12EAB3007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0F2B0BC4F3002FB6A9 /* CoreDataSumpleApp.xcdatamodeld */; };
 		30FF6E072B0BC4F3002FB6A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */; };
 		30FF6E092B0BC4F3002FB6A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */; };
 		30FF6E0B2B0BC4F3002FB6A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FF6E0A2B0BC4F3002FB6A9 /* ViewController.swift */; };
@@ -37,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3034E9912B125079007E9D19 /* TasksViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewControllerTests.swift; sourceTree = "<group>"; };
 		30FF6E032B0BC4F3002FB6A9 /* CoreDataSumpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataSumpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				30FF6E212B0BC4F4002FB6A9 /* CoreDataSumpleAppTests.swift */,
+				3034E9912B125079007E9D19 /* TasksViewControllerTests.swift */,
 			);
 			path = CoreDataSumpleAppTests;
 			sourceTree = "<group>";
@@ -146,7 +156,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				30FF6E492B0BC8F4002FB6A9 /* PBXTargetDependency */,
 			);
 			name = CoreDataSumpleApp;
 			packageProductDependencies = (
@@ -224,7 +233,6 @@
 			);
 			mainGroup = 30FF6DFA2B0BC4F3002FB6A9;
 			packageReferences = (
-				30FF6E452B0BC799002FB6A9 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 30FF6E042B0BC4F3002FB6A9 /* Products */;
 			projectDirPath = "";
@@ -280,7 +288,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3034E98F2B12503E007E9D19 /* ViewController.swift in Sources */,
+				3034E9922B125079007E9D19 /* TasksViewControllerTests.swift in Sources */,
+				3034E9972B12EAB2007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */,
 				30FF6E222B0BC4F4002FB6A9 /* CoreDataSumpleAppTests.swift in Sources */,
+				3034E9952B12EA82007E9D19 /* AppDelegate.swift in Sources */,
+				3034E9932B12EA7F007E9D19 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,8 +301,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3034E9962B12EA82007E9D19 /* AppDelegate.swift in Sources */,
 				30FF6E2C2B0BC4F4002FB6A9 /* CoreDataSumpleAppUITests.swift in Sources */,
+				3034E9982B12EAB3007E9D19 /* CoreDataSumpleApp.xcdatamodeld in Sources */,
 				30FF6E2E2B0BC4F4002FB6A9 /* CoreDataSumpleAppUITestsLaunchTests.swift in Sources */,
+				3034E9942B12EA7F007E9D19 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,10 +321,6 @@
 			isa = PBXTargetDependency;
 			target = 30FF6E022B0BC4F3002FB6A9 /* CoreDataSumpleApp */;
 			targetProxy = 30FF6E282B0BC4F4002FB6A9 /* PBXContainerItemProxy */;
-		};
-		30FF6E492B0BC8F4002FB6A9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 30FF6E482B0BC8F4002FB6A9 /* SwiftLintPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -625,25 +637,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		30FF6E452B0BC799002FB6A9 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		30FF6E482B0BC8F4002FB6A9 /* SwiftLintPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 30FF6E452B0BC799002FB6A9 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = "plugin:SwiftLintPlugin";
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		30FF6E0F2B0BC4F3002FB6A9 /* CoreDataSumpleApp.xcdatamodeld */ = {
