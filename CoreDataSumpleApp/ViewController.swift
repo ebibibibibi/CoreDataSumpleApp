@@ -109,7 +109,7 @@ class TasksViewController: UITableViewController {
     }
     
     // CoreDataのタスクを全て削除する。
-    private func deleteAllTasks() {
+    internal func deleteAllTasks() {
         let context = getContext()
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         if let objects = try? context.fetch(fetchRequest) {

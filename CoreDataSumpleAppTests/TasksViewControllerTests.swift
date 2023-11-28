@@ -12,7 +12,6 @@ import XCTest
 
 final class TasksViewControllerTests: XCTestCase {
     var viewController: TasksViewController!
-    var mockPersistantContainer: NSPersistentContainer!
     
     override func setUp() {
         super.setUp()
@@ -65,10 +64,12 @@ final class TasksViewControllerTests: XCTestCase {
     
     // deleteAllTasks()メソッドがCore Dataの全タスクを適切に削除することを確認
     private func testDeleteAllTasks() {
-        
+        self.testSaveTask()
+        viewController.deleteAllTasks()
+        XCTAssertEqual(viewController.tasks.count, 0, "フェッチされるタスクは存在しない")
     }
     
-    // deleteTask(at:)メソッドが特定のタスクを正しく削除することを確認
+    // ≈(at:)メソッドが特定のタスクを正しく削除することを確認
     private func testDeleteTask() {
         
     }
