@@ -31,6 +31,12 @@ final class TasksViewControllerTests: XCTestCase {
         // NSPersistentStoreDescriptionオブジェクトを作成し、typeをNSInMemoryStoreTypeに設定
         // => addPersistentStoreWithTypeの呼び出しに相当。内部的にインメモリの永続ストアをセットアップ。
         let description = NSPersistentStoreDescription()
+        // NSPersistentStoreDescription はpersistent storeの設定と構成を定義する
+        // テストの際には、データをディスクに永続化せずにメモリ上にのみ保持するために、永続ストアとしてNSInMemoryStoreTypeを指定する
+        // ユニットテストの際には、テストごとに独立したデータ環境を用意する
+        // NSInMemoryStoreTypeを使用すると、データがメモリ上にのみ存在し、テストの実行が終了するとデータが破棄される
+        // これにより、テスト間でのデータの干渉を避けることができる
+        // メモリ上のストアはディスクへの読み書きがないため、テストの実行速度も向上する。
         description.type = NSInMemoryStoreType
         container.persistentStoreDescriptions = [
             description
