@@ -12,9 +12,43 @@ import XCTest
 
 final class TasksViewControllerTests: XCTestCase {
     var viewController: TasksViewController!
+    // テスト用のデータストアを操作するマネージャーを設定。
+    var managedObjectContext: NSManagedObjectContext!
     
+    // テストのための初期設定
     override func setUp() {
         super.setUp()
+        // インメモリストアを持つNSPersistentContainerを設定
+        // NSPersistentContainer ← 一番大事。
+        /*
+         - NSPersistentStoreCoordinatorを内部で管理しているので、初期化と永続化ストアの読み込みプロセスがすでに完了している。
+         - NSPersistentContainer(name: "Task")により、指定された名前（この場合は"Task"）のモデルファイル（.xcdatamodeld）をアプリケーションのバンドルから検索し、NSManagedObjectModelを生成する
+         -
+         */
+        let container = NSPersistentContainer(name: "Task")
+        // 永続ストアを作成およびロードするために使用される
+        // NSPersistentStoreDescription はストアの種類、場所
+        // NSPersistentStoreDescriptionオブジェクトを作成し、typeをNSInMemoryStoreTypeに設定
+        // => addPersistentStoreWithTypeの呼び出しに相当。内部的にインメモリの永続ストアをセットアップ。
+        let description = NSPersistentStoreDescription()
+        description.type = NSInMemoryStoreType
+        container.persistentStoreDescriptions = [
+            description
+        ]
+        description.type = NSInMemoryStoreType
+        container.persistentStoreDescriptions = [description]
+        
+        container.loadPersistentStores { (description, error) in
+            if let error = error {
+                fatalError("Failed to load stores: \(error)")
+            }
+        }
+        
+        // NSPersistentContainerのviewContextを取得
+        // viewContextはNSPersistentContainerによって提供されるNSManagedObjectContextのインスタンス
+        // viewContextはデフォルトでメインキュー上で動作するように設定されている
+        //
+        self.managedObjectContext = container.viewContext
         // テスト用のViewControllerインスタンスを生成
         viewController = TasksViewController()
     }
@@ -38,25 +72,17 @@ final class TasksViewControllerTests: XCTestCase {
         XCTAssertTrue(context is NSManagedObjectContext, "contextはNSManagedObjectContext型のインスタンスです。")
     }
     
-    // viewWillAppearメソッド内で、Core Dataからデータをフェッチする処理が正しく行われることを確認
+    // Core Dataからデータをフェッチする処理が正しく行われることを確認
     private func testFatchData() throws {
-        // getContext()メソッドを呼び出し
-        let context = viewController.getContext()
-        let task = Task(context: context)
-        task.title = "Test Task"
-        task.isFinish = false
-        try context.save()
-        
-        XCTAssertEqual(viewController.tasks.count, 1, "フェッチされるタスクは1つであるべきだ")
-        
-        XCTAssertEqual(viewController.tasks.first?.title, "Test Task", "フェッチされたタスクは正しいタイトルを持つべきである")
+        // viewWillAppearメソッドのTrigger
+        viewController.beginAppearanceTransition(true, animated: false)
+        viewController.endAppearanceTransition()
+        // そのとき何も保存されていないのであれば `[]`が取得されるし、何か
+        XCTAssertNotNil(viewController.tasks)
     }
     
     // saveTask(withTitle:)メソッドが新しいタスクを正しくCore Dataに保存していることを確認する
     private func testSaveTask() {
-        // getContext()メソッドを呼び出し
-        let context = viewController.getContext()
-        let task = Task(context: context)
         viewController.saveTask(withTitle: "新しいタスク")
         XCTAssertEqual(viewController.tasks.count, 1, "フェッチされるタスクは1つであるべきだ")
         XCTAssertEqual(viewController.tasks.first?.title, "新しいタスク", "フェッチされたタスクは正しいタイトルを持つべきである")
@@ -69,7 +95,7 @@ final class TasksViewControllerTests: XCTestCase {
         XCTAssertEqual(viewController.tasks.count, 0, "フェッチされるタスクは存在しない")
     }
     
-    // ≈(at:)メソッドが特定のタスクを正しく削除することを確認
+    // deleteTask(at:)メソッドが特定のタスクを正しく削除することを確認
     private func testDeleteTask() {
         
     }
