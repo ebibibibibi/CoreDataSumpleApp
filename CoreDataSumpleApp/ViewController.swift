@@ -122,7 +122,7 @@ extension TasksViewController {
     
     private func leadingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
-            self.managedCoreData.changeDone(at: indexPath)
+            self.managedCoreData.changeDone(at: indexPath.row)
             completion(true)
         }
         
@@ -145,7 +145,7 @@ extension TasksViewController {
     }
     private func trailingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
-            self.managedCoreData.deleteTask(at: indexPath)
+            self.managedCoreData.deleteTask(at: indexPath.row)
             completion(true)
             self.tableView.reloadData()
         }

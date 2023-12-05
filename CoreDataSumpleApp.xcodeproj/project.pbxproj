@@ -114,6 +114,7 @@
 				30FF6E062B0BC4F3002FB6A9 /* AppDelegate.swift */,
 				30FF6E082B0BC4F3002FB6A9 /* SceneDelegate.swift */,
 				30FF6E0A2B0BC4F3002FB6A9 /* ViewController.swift */,
+				30FC7C102B1E2A0600837757 /* ManagedCoreData.swift */,
 				30FF6E0C2B0BC4F3002FB6A9 /* Main.storyboard */,
 				30FF6E122B0BC4F4002FB6A9 /* Assets.xcassets */,
 				30FF6E142B0BC4F4002FB6A9 /* LaunchScreen.storyboard */,
@@ -129,7 +130,6 @@
 			children = (
 				30FF6E212B0BC4F4002FB6A9 /* CoreDataSumpleAppTests.swift */,
 				3034E9912B125079007E9D19 /* TasksViewControllerTests.swift */,
-				30FC7C102B1E2A0600837757 /* ManagedCoreData.swift */,
 			);
 			path = CoreDataSumpleAppTests;
 			sourceTree = "<group>";

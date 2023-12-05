@@ -41,15 +41,15 @@ class ManagedCoreData {
         }
     }
     // タスクのステータスを更新する
-    internal func changeDone(at indexPath: IndexPath) {
+    internal func changeDone(at indexPath: Int) {
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        let title = tasks[indexPath.row].title
+        let title = tasks[indexPath].title
         fetchRequest.predicate = NSPredicate(format: "title == %@", title!)
         
         do {
             let results = try context.fetch(fetchRequest)
-            tasks[indexPath.row] = results.first!
-            tasks[indexPath.row].isFinish = !tasks[indexPath.row].isFinish
+            tasks[indexPath] = results.first!
+            tasks[indexPath].isFinish = !tasks[indexPath].isFinish
             
             try context.save()
         } catch let error as NSError {
@@ -57,9 +57,9 @@ class ManagedCoreData {
         }
     }
     // タスクの削除を行う
-    internal func deleteTask(at indexPath: IndexPath) {
+    internal func deleteTask(at indexPath: Int) {
         do {
-            tasks.remove(at: indexPath.row)
+            tasks.remove(at: indexPath)
             try context.save()
         } catch let error as NSError {
             print(error.localizedDescription)
