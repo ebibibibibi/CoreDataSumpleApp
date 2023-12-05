@@ -10,8 +10,6 @@ import CoreData
 
 class TasksViewController: UITableViewController {
     let managedCoreData = ManagedCoreData()
-    // Task型のオブジェクトを格納するための空の配列を初期化
-    var tasks: [Task] = []
     // データベースに対するクエリや保存といった操作を行うための前準備
     private func getContext() ->  NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -36,7 +34,7 @@ class TasksViewController: UITableViewController {
         
         // contextを使用して、fetchRequestに基づいてデータを取得し、それをtasks配列に格納する
         do {
-            tasks = try managedCoreData.context.fetch(fetchRequest)
+            managedCoreData.tasks = try managedCoreData.context.fetch(fetchRequest)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -77,7 +75,7 @@ class TasksViewController: UITableViewController {
         let alertController = UIAlertController(title: "削除", message: "全てのタスクを削除しますか?", preferredStyle: .alert)
         
         let yes = UIAlertAction(title: "はい", style: .default) { action in
-            self.deleteAllTasks()
+            self.managedCoreData.deleteAllTasks()
             self.tableView.reloadData()
         }
         
@@ -88,24 +86,6 @@ class TasksViewController: UITableViewController {
         alertController.addAction(no)
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    // CoreDataのタスクを全て削除する。
-    internal func deleteAllTasks() {
-        let context = getContext()
-        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        if let objects = try? context.fetch(fetchRequest) {
-            for object in objects {
-                context.delete(object)
-                tasks.removeAll()
-            }
-        }
-        
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
 }
 
@@ -118,7 +98,7 @@ extension TasksViewController {
     
     // テーブルビューに表示するタスクの数を返す
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return managedCoreData.tasks.count
     }
     
     // 各タスクに対応するテーブルビューセルを設定
@@ -126,7 +106,7 @@ extension TasksViewController {
     // タスクが完了している（isFinishがtrue）場合は、セルの背景色を赤に変更
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let task = tasks[indexPath.row]
+        let task = managedCoreData.tasks[indexPath.row]
         cell.textLabel?.text = task.title
         
         if task.isFinish {
@@ -146,7 +126,7 @@ extension TasksViewController {
             completion(true)
         }
         
-        let row = tasks[indexPath.row]
+        let row = managedCoreData.tasks[indexPath.row]
         action.image = UIImage(systemName: "checkmark.square")
         if row.isFinish {
             action.image = UIImage(systemName: "checkmark.square.fill")
