@@ -9,11 +9,11 @@ import UIKit
 import CoreData
 
 class TasksViewController: UITableViewController {
+    let managedCoreData = ManagedCoreData()
+    // Task型のオブジェクトを格納するための空の配列を初期化
     var tasks: [Task] = []
-    
-    // NSManagedObjectContextを取得。
     // データベースに対するクエリや保存といった操作を行うための前準備
-    internal func getContext() ->  NSManagedObjectContext {
+    private func getContext() ->  NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
@@ -21,12 +21,13 @@ class TasksViewController: UITableViewController {
     // 画面が表示された時 CoreDataからTODOリストに登録されている項目を取得する。
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let context = getContext()
+        managedCoreData.context = getContext()
         // fetchRequestはCore DataからTaskエンティティのインスタンスを取得するためのリクエストを作成し、実行する役割を担っている。
         // ジェネリクスを使うのは定石。これにより、フェッチリクエストの結果がそのエンティティタイプの配列であることがコンパイル時に保証できる。
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         // sortDescriptionはNSSortDescriptorのインスタンスであり、フェッチリクエストの結果を特定の順序でソートするために使用される。
         // ソートキーの指定 = `key: "title"` , ソート順の指定(降順) = `ascending: false`
+        
         let sortDescription = NSSortDescriptor(key: "title", ascending: false)
         
         // fetchRequestにsortDescriptorsプロパティとしてこのsortDescriptionを設定することで、
@@ -35,7 +36,7 @@ class TasksViewController: UITableViewController {
         
         // contextを使用して、fetchRequestに基づいてデータを取得し、それをtasks配列に格納する
         do {
-            tasks = try context.fetch(fetchRequest)
+            tasks = try managedCoreData.context.fetch(fetchRequest)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
@@ -54,7 +55,7 @@ class TasksViewController: UITableViewController {
             let textField = alertController.textFields?.first
             
             if let newTask = textField?.text {
-                self.saveTask(withTitle: newTask)
+                self.managedCoreData.saveTask(withTitle: newTask)
                 self.tableView.reloadData()
             }
         }
@@ -69,25 +70,6 @@ class TasksViewController: UITableViewController {
         alertController.addAction(saveActrion)
         
         present(alertController, animated: true, completion: nil)
-    }
-    
-    // 新しいタスクをCore Dataに保存する
-    internal func saveTask(withTitle title: String) {
-        let context = getContext()
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "Task", in: context) else { return }
-        
-        let taskObject = Task(entity: entity, insertInto: context)
-        taskObject.title = title
-        taskObject.isFinish = false
-        
-        do {
-            try context.save()
-            tasks.append(taskObject)
-            
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
     
     // 全てのタスクを削除する。
@@ -160,7 +142,7 @@ extension TasksViewController {
     
     private func leadingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
-            changeDone(at: indexPath)
+            self.managedCoreData.changeDone(at: indexPath)
             completion(true)
         }
         
@@ -169,29 +151,12 @@ extension TasksViewController {
         if row.isFinish {
             action.image = UIImage(systemName: "checkmark.square.fill")
             action.backgroundColor = .systemRed
-
+            
         } else {
             action.backgroundColor = .systemGray
         }
         
         return action
-    }
-    // タスクのステータスを更新する
-    private func changeDone(at indexPath: IndexPath) {
-        let context = getContext()
-        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        let title = tasks[indexPath.row].title
-        fetchRequest.predicate = NSPredicate(format: "title == %@", title!)
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            tasks[indexPath.row] = results.first!
-            tasks[indexPath.row].isFinish = !tasks[indexPath.row].isFinish
-
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -200,22 +165,12 @@ extension TasksViewController {
     }
     private func trailingSwipeDoneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: "Done") { [self] (action, view, completion) in
-            deleteTask(at: indexPath)
+            self.managedCoreData.deleteTask(at: indexPath)
             completion(true)
+            self.tableView.reloadData()
         }
         action.image = UIImage(systemName: "trash")
         
         return action
-    }
-    // タスクの削除を行う
-    private func deleteTask(at indexPath: IndexPath) {
-        let context = getContext()
-        do {
-            tasks.remove(at: indexPath.row)
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        self.tableView.reloadData()
     }
 }
