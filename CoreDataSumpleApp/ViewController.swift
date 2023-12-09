@@ -21,7 +21,6 @@ class TasksViewController: UITableViewController {
         super.viewWillAppear(animated)
         managedCoreData.context = getContext()
         // fetchRequestはCore DataからTaskエンティティのインスタンスを取得するためのリクエストを作成し、実行する役割を担っている。
-        // ジェネリクスを使うのは定石。これにより、フェッチリクエストの結果がそのエンティティタイプの配列であることがコンパイル時に保証できる。
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         // sortDescriptionはNSSortDescriptorのインスタンスであり、フェッチリクエストの結果を特定の順序でソートするために使用される。
         // ソートキーの指定 = `key: "title"` , ソート順の指定(降順) = `ascending: false`
@@ -31,8 +30,6 @@ class TasksViewController: UITableViewController {
         // fetchRequestにsortDescriptorsプロパティとしてこのsortDescriptionを設定することで、
         // フェッチされるTaskのリストがtitle属性に基づいて降順にソートされた状態で取得される。
         fetchRequest.sortDescriptors = [sortDescription]
-        
-        // contextを使用して、fetchRequestに基づいてデータを取得し、それをtasks配列に格納する
         do {
             managedCoreData.tasks = try managedCoreData.context.fetch(fetchRequest)
         } catch let error as NSError {
@@ -108,10 +105,6 @@ extension TasksViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let task = managedCoreData.tasks[indexPath.row]
         cell.textLabel?.text = task.title
-        
-        if task.isFinish {
-            cell.backgroundColor = .red
-        }
         return cell
     }
     

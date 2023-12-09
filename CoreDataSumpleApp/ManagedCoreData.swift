@@ -31,38 +31,68 @@ class ManagedCoreData {
         if let objects = try? context.fetch(fetchRequest) {
             for object in objects {
                 context.delete(object)
-                tasks.removeAll()
             }
         }
-        do {
-            try context.save()
-        } catch let error as NSError {
-            print(error.localizedDescription)
+        // コンテキストに変更がある場合のみ保存を試みる
+        if context.hasChanges {
+            do {
+                try context.save()
+                tasks.removeAll()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
         }
     }
+    
     // タスクのステータスを更新する
     internal func changeDone(at indexPath: Int) {
+        guard let title = tasks[indexPath].title else {
+            print("指定されたタスクにタイトルがない")
+            return
+        }
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        let title = tasks[indexPath].title
-        fetchRequest.predicate = NSPredicate(format: "title == %@", title!)
-        
+        // フェッチリクエストの結果をフィルタリング
+        fetchRequest.predicate = NSPredicate(format: "title == %@", title)
         do {
             let results = try context.fetch(fetchRequest)
-            tasks[indexPath] = results.first!
-            tasks[indexPath].isFinish = !tasks[indexPath].isFinish
+            guard let taskToUpdate = results.first else {
+                print("タイトルが一致するタスクが見つかりません")
+                return
+            }
+            taskToUpdate.isFinish = !taskToUpdate.isFinish
             
-            try context.save()
+            if context.hasChanges {
+                try context.save()
+            }
         } catch let error as NSError {
             print(error.localizedDescription)
         }
     }
+    
     // タスクの削除を行う
     internal func deleteTask(at indexPath: Int) {
+        guard let title = tasks[indexPath].title else {
+            print("指定されたタスクにタイトルがない")
+            return
+        }
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        // フェッチリクエストの結果をフィルタリング
+        fetchRequest.predicate = NSPredicate(format: "title == %@", title)
         do {
-            tasks.remove(at: indexPath)
-            try context.save()
+            let results = try context.fetch(fetchRequest)
+            guard let taskToDelete = results.first else {
+                print("タイトルが一致するタスクが見つかりません")
+                return
+            }
+            context.delete(taskToDelete)
+            // コンテキストに変更がある場合のみ保存を試みる
+            if context.hasChanges {
+                try context.save() // 変更を保存
+                tasks.remove(at: indexPath) // 配列からもタスクを削除
+            }
         } catch let error as NSError {
             print(error.localizedDescription)
         }
     }
+    
 }
