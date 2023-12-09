@@ -1,7 +1,7 @@
 # CoreDataSumpleApp
 
 UIKit × CoreData 
-CRUD操作の実装サンプル
+CRUD操作 + ユニットテスト の実装サンプル
 
 Xcode15
 Swift 5.9
